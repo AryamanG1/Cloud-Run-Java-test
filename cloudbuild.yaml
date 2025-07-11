@@ -1,0 +1,25 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  # Step 1: Build Docker image from Dockerfile
+  - name: gcr.io/cloud-builders/docker
+    id: Build
+    args:
+      - build
+      - -t
+      - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
+      - .
+
+  # Step 2: Push Docker image to Artifact Registry
+  - name: gcr.io/cloud-builders/docker
+    id: Push
+    args:
+      - push
+      - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
+
+
+images:
+  - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
+
+timeout: "2000s"
