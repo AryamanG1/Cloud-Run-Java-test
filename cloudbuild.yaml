@@ -1,6 +1,9 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-
+  
+substitutions:
+  _IMAGE: my-app            
+  
 steps:
   # Step 1: Build Docker image from Dockerfile
   - name: gcr.io/cloud-builders/docker
@@ -17,7 +20,6 @@ steps:
     args:
       - push
       - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
-
 
 images:
   - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
